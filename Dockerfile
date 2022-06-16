@@ -11,6 +11,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV TZ=America/New_York
 ENV SCREEN_RESOLUTION 1280x720
+
+# See --> https://groups.google.com/g/jaer-users/c/G6mZ7EXmiYQ
 ENV _JAVA_OPTIONS="-Djogl.disable.openglcore=false"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -54,7 +56,8 @@ RUN ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
 #RUN ln -s /root/novnc/vnc.html /root/novnc/index.html
 
 ## mesa drivers to correct plot issues with scilab 6x
-RUN add-apt-repository ppa:kisak/kisak-turtle -y
+# See --> https://www.linuxcapable.com/install-upgrade-mesa-drivers-radeon-nvidia-on-ubuntu-20-04-lts/
+RUN add-apt-repository ppa:kisak/kisak-mesa -y
 RUN apt update
 RUN apt upgrade -y
 
