@@ -1,6 +1,6 @@
-# noVNC access to Scilab 6.0.1 + Coselica through a web browser#
+# noVNC access to Scilab 6.1.1 through a web browser#
 
-FROM ubuntu:18.04
+FROM ubuntu:20.04
 LABEL maintainer="jdehart@avian.com" 
 
 # Set correct environment variables
@@ -36,8 +36,8 @@ RUN apt-get install -y build-essential libreadline-gplv2-dev \
 
 # Install scilab and coselica toolbox
 RUN apt-get install -y scilab
-RUN scilab-cli -e  "atomsRepositoryAdd([\"http://atoms.scilab.org/6.0\"]); exit;" -nb
-RUN scilab-cli -e  "atomsInstall(\"coselica\"); exit;" -nb
+#RUN scilab-cli -e  "atomsRepositoryAdd([\"http://atoms.scilab.org/6.0\"]); exit;" -nb
+#RUN scilab-cli -e  "atomsInstall(\"coselica\"); exit;" -nb
 
 # House cleaning
 RUN apt-get autoclean
@@ -61,9 +61,6 @@ RUN ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
 RUN add-apt-repository ppa:kisak/kisak-mesa -y
 RUN apt update
 RUN apt upgrade -y
-
-# Add coselica atoms here
-
 
 # A few examples for the demo
 # WORKDIR /scripts
