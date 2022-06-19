@@ -1,4 +1,4 @@
-# noVNC access to Scilab 6.1.1 through a web browser#
+# noVNC access to Scilab 6.0.2 w/coselica through a web browser #
 
 FROM ubuntu:20.04
 LABEL maintainer="jdehart@avian.com" 
@@ -11,6 +11,8 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US.UTF-8
 ENV TZ=America/New_York
 ENV SCREEN_RESOLUTION 1280x720
+ENV SCILAB_EXECUTABLE='/tmp/scilab-6.0.2/bin/scilab-adv-cli'
+#ENV SCILAB_EXECUTABLE="scilab-adv-cli"
 
 # See --> https://groups.google.com/g/jaer-users/c/G6mZ7EXmiYQ
 ENV _JAVA_OPTIONS="-Djogl.disable.openglcore=false"
@@ -29,15 +31,23 @@ RUN apt-get update && apt-get -y install \
 	nano
 
 # Extras
-RUN apt-get install -y build-essential libreadline-gplv2-dev \
+RUN apt-get install -y build-essential libreadline-gplv2-dev gfortran \
     libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev \
     libbz2-dev libffi-dev python3-pip unzip lsb-release software-properties-common \
     curl wget rsync mesa-utils
 
 # Install scilab and coselica toolbox
-RUN apt-get install -y scilab
-#RUN scilab-cli -e  "atomsRepositoryAdd([\"http://atoms.scilab.org/6.0\"]); exit;" -nb
-#RUN scilab-cli -e  "atomsInstall(\"coselica\"); exit;" -nb
+#RUN apt-get install -y scilab
+WORKDIR /tmp
+RUN wget https://www.scilab.org/download/6.0.2/scilab-6.0.2.bin.linux-x86_64.tar.gz
+RUN tar xf scilab-6.0.2.bin.linux-x86_64.tar.gz
+RUN /tmp/scilab-6.0.2/bin/scilab-cli -e  "atomsRepositoryAdd([\"http://atoms.scilab.org/6.0\"]); exit;" -nb
+RUN /tmp/scilab-6.0.2/bin/scilab-cli -e  "atomsInstall(\"coselica\"); exit;" -nb
+RUN rm scilab-6.0.2.bin.linux-x86_64.tar.gz
+
+# Install jupyter
+RUN pip install --upgrade pip
+RUN pip install jupyterlab scilab-kernel
 
 # House cleaning
 RUN apt-get autoclean
@@ -66,10 +76,18 @@ RUN apt upgrade -y
 # WORKDIR /scripts
 # ADD ./octave_scr /scripts
 
+# Pull test directory
+#RUN useradd -ms /bin/bash scilab
+#USER scilab
+#WORKDIR /home/scilab 
+RUN git clone https://github.com/avianinc/jupyter_demos
+#RUN cd /home/jupyter_demos/API_Demo
+
 # Can be configured to set octave settings
 # COPY qt-settings /root/.config/octave/qt-settings
 
 # Expose Port (Note: if you change it do it as well in surpervisord.conf)
 EXPOSE 8084
+EXPOSE 8888
 
 CMD ["/usr/bin/supervisord"]
