@@ -63,8 +63,8 @@ WORKDIR /root/
 #ADD noVNC-0.6.2 /root/novnc/
 RUN git clone https://github.com/novnc/noVNC.git ./novnc  && \
     git clone https://github.com/novnc/websockify.git ./novnc/utils/websockify
-RUN ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
-#RUN ln -s /root/novnc/vnc.html /root/novnc/index.html
+#RUN ln -s /root/novnc/vnc_lite.html /root/novnc/index.html
+RUN ln -s /root/novnc/vnc.html /root/novnc/index.html
 
 ## mesa drivers to correct plot issues with scilab 6x
 # See --> https://www.linuxcapable.com/install-upgrade-mesa-drivers-radeon-nvidia-on-ubuntu-20-04-lts/
