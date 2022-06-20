@@ -47,7 +47,7 @@ RUN rm scilab-6.0.2.bin.linux-x86_64.tar.gz
 
 # Install jupyter
 RUN pip install --upgrade pip
-RUN pip install jupyterlab scilab-kernel pandas matplotlib numpy requests requests
+RUN pip install jupyterlab scilab-kernel pandas matplotlib numpy requests requests jupyter-kernelgateway
 
 # House cleaning
 RUN apt-get autoclean
