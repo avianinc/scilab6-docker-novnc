@@ -15,7 +15,7 @@ ENV SCILAB_EXECUTABLE='/tmp/scilab-6.0.2/bin/scilab-adv-cli'
 #ENV SCILAB_EXECUTABLE="scilab-adv-cli"
 
 # See --> https://groups.google.com/g/jaer-users/c/G6mZ7EXmiYQ
-ENV _JAVA_OPTIONS="-Djogl.disable.openglcore=false"
+#ENV _JAVA_OPTIONS="-Djogl.disable.openglcore=false"
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Base install
@@ -28,7 +28,7 @@ RUN apt-get update && apt-get -y install \
 	git-core \
 	git \
     procps \
-	nano
+	nano 
 
 # Extras
 RUN apt-get install -y build-essential libreadline-gplv2-dev gfortran \
@@ -81,7 +81,7 @@ RUN apt upgrade -y
 #USER scilab
 #WORKDIR /home/scilab 
 RUN git clone https://github.com/avianinc/jupyter_demos
-#RUN cd /home/jupyter_demos/API_Demo
+#RUN cd /root/jupyter_demos/API_Demo
 
 # Can be configured to set octave settings
 # COPY qt-settings /root/.config/octave/qt-settings
@@ -89,5 +89,6 @@ RUN git clone https://github.com/avianinc/jupyter_demos
 # Expose Port (Note: if you change it do it as well in surpervisord.conf)
 EXPOSE 8084
 EXPOSE 8888
+EXPOSE 10100
 
 CMD ["/usr/bin/supervisord"]
