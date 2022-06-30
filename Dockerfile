@@ -90,8 +90,8 @@ RUN git clone https://github.com/avianinc/jupyter_demos
 # COPY qt-settings /root/.config/octave/qt-settings
 
 # Expose Port (Note: if you change it do it as well in surpervisord.conf)
-EXPOSE 8084
-EXPOSE 8888
 EXPOSE 10100
+EXPOSE 8888
+EXPOSE 8084
 
 CMD ["/usr/bin/supervisord"]
