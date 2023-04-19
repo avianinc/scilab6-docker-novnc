@@ -92,7 +92,7 @@ RUN git clone https://github.com/avianinc/jupyter_demos
 # Expose Port (Note: if you change it do it as well in surpervisord.conf)
 
 EXPOSE 8084
-EXPOSE 8888
+EXPOSE 8889
 EXPOSE 10100
 
 CMD ["/usr/bin/supervisord"]
